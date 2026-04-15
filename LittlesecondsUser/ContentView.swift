@@ -8,17 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var appState = AppState()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        MainTabView()
+            .environmentObject(appState)
+    }
+}
+
+struct MainTabView: View {
+    var body: some View {
+        TabView {
+            DiscoverView()
+                .tabItem {
+                    Label("Discover", systemImage: "magnifyingglass")
+                }
+
+            BookingsView()
+                .tabItem {
+                    Label("Bookings", systemImage: "calendar")
+                }
+
+            SavedView()
+                .tabItem {
+                    Label("Saved", systemImage: "heart")
+                }
+
+            AccountView()
+                .tabItem {
+                    Label("Account", systemImage: "person")
+                }
         }
-        .padding()
+        .tint(.brandDarkGreen)
     }
 }
 
 #Preview {
-    ContentView()
+    MainTabView()
+        .environmentObject(AppState())
 }
