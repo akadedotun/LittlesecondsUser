@@ -3,6 +3,7 @@ import SwiftUI
 struct BusinessDetailView: View {
     let business: Business
     @State private var showBookingFlow = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -112,7 +113,10 @@ struct BusinessDetailView: View {
         .toolbarColorScheme(.light)
         .tint(.brandDarkGreen)
         .sheet(isPresented: $showBookingFlow) {
-            BookingFlowView(business: business, onDismiss: { showBookingFlow = false })
+            BookingFlowView(business: business, onDismiss: {
+                showBookingFlow = false
+                dismiss()
+            })
         }
     }
 

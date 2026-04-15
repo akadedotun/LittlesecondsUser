@@ -175,6 +175,7 @@ struct DiscoverView: View {
     @State private var detailBusiness: Business? = nil
     @State private var showDetail = false
     @State private var swipeActionBusiness: Business? = nil // tracks swipe animation
+    @State private var selectedBooking: Booking? = nil
 
     private let categories = ["All", "Salons", "Barbers", "Spas", "Nails", "Lashes", "Brows", "Massage", "Skincare", "Makeup", "Waxing", "Wellness"]
     private let swipeThreshold: CGFloat = 100
@@ -222,7 +223,7 @@ struct DiscoverView: View {
                 .padding(.top, 36)
                 .padding(.bottom, 16)
 
-                // Upcoming booking banner
+                // Upcoming banner replaces search bar when a booking exists
                 if let booking = appState.nextUpcomingBooking {
                     HStack(spacing: 12) {
                         Image(systemName: "calendar.badge.clock")
@@ -243,21 +244,22 @@ struct DiscoverView: View {
                     .cornerRadius(12)
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
+                    .onTapGesture { selectedBooking = booking }
+                } else {
+                    // Search bar — only shown when no upcoming booking
+                    HStack(spacing: 10) {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.secondary)
+                        TextField("Search salons, spas, barbers...", text: $searchText)
+                            .font(.system(size: 16))
+                    }
+                    .padding(12)
+                    .background(Color.cardWhite)
+                    .cornerRadius(12)
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.3), lineWidth: 1))
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 16)
                 }
-
-                // Search bar
-                HStack(spacing: 10) {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    TextField("Search salons, spas, barbers...", text: $searchText)
-                        .font(.system(size: 16))
-                }
-                .padding(12)
-                .background(Color.cardWhite)
-                .cornerRadius(12)
-                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.gray.opacity(0.3), lineWidth: 1))
-                .padding(.horizontal, 16)
-                .padding(.bottom, 16)
 
                 // Category chips
 
@@ -328,6 +330,10 @@ struct DiscoverView: View {
             .background(Color.backgroundGray)
             .sheet(item: $bookingBusiness) { business in
                 BookingFlowView(business: business, onDismiss: { bookingBusiness = nil })
+            }
+            .sheet(item: $selectedBooking) { booking in
+                BookingDetailSheet(booking: booking, onDismiss: { selectedBooking = nil })
+                    .environmentObject(appState)
             }
             .navigationDestination(isPresented: $showDetail) {
                 if let business = detailBusiness {

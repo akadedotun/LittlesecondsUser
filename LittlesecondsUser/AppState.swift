@@ -15,6 +15,10 @@ final class AppState: ObservableObject {
         bookings.append(booking)
     }
 
+    func cancelBooking(_ booking: Booking) {
+        bookings.removeAll { $0.id == booking.id }
+    }
+
     func save(_ business: Business) {
         guard !savedBusinesses.contains(where: { $0.id == business.id }) else { return }
         savedBusinesses.append(business)
