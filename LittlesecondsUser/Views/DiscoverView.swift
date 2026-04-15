@@ -213,14 +213,14 @@ struct DiscoverView: View {
                         Image(systemName: "location.fill")
                             .font(.system(size: 12))
                             .foregroundColor(.brandDarkGreen)
-                        Text("Chelmsford")
+                        Text("Essex, UK")
                             .font(.system(size: 13))
                             .foregroundColor(.secondary)
                     }
                 }
                 .padding(.horizontal, 16)
-                .padding(.top, 24)
-                .padding(.bottom, 8)
+                .padding(.top, 36)
+                .padding(.bottom, 16)
 
                 // Upcoming booking banner
                 if let booking = appState.nextUpcomingBooking {
@@ -242,7 +242,7 @@ struct DiscoverView: View {
                     .background(Color.brandDarkGreen.opacity(0.08))
                     .cornerRadius(12)
                     .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 16)
                 }
 
                 // Search bar
@@ -262,7 +262,7 @@ struct DiscoverView: View {
                 // Category chips
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 10) {
+                    HStack(spacing: 8) {
                         ForEach(categories, id: \.self) { cat in
                             let isSelected = selectedCategory == cat
                             Text(cat)
