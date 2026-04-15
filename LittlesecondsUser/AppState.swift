@@ -3,6 +3,17 @@ import Combine
 
 final class AppState: ObservableObject {
     @Published var savedBusinesses: [Business] = []
+    @Published var bookings: [Booking] = []
+
+    var nextUpcomingBooking: Booking? {
+        bookings.filter { $0.status == .upcoming }
+              .sorted { $0.date < $1.date }
+              .first
+    }
+
+    func addBooking(_ booking: Booking) {
+        bookings.append(booking)
+    }
 
     func save(_ business: Business) {
         guard !savedBusinesses.contains(where: { $0.id == business.id }) else { return }

@@ -97,10 +97,22 @@ private struct SwipeCard: View {
                 // Swipe tint overlay
                 Color.green
                     .opacity(likeOpacity * 0.25)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 460)
+                    .clipShape(UnevenRoundedRectangle(
+                        topLeadingRadius: 20, bottomLeadingRadius: 0,
+                        bottomTrailingRadius: 0, topTrailingRadius: 20
+                    ))
                     .allowsHitTesting(false)
 
                 Color.red
                     .opacity(nopeOpacity * 0.25)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 460)
+                    .clipShape(UnevenRoundedRectangle(
+                        topLeadingRadius: 20, bottomLeadingRadius: 0,
+                        bottomTrailingRadius: 0, topTrailingRadius: 20
+                    ))
                     .allowsHitTesting(false)
             }
 
@@ -210,6 +222,29 @@ struct DiscoverView: View {
                 .padding(.top, 24)
                 .padding(.bottom, 8)
 
+                // Upcoming booking banner
+                if let booking = appState.nextUpcomingBooking {
+                    HStack(spacing: 12) {
+                        Image(systemName: "calendar.badge.clock")
+                            .font(.system(size: 20))
+                            .foregroundColor(.brandDarkGreen)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Upcoming: \(booking.business.name)")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.brandDarkGreen)
+                            Text("\(booking.service.name) · \(booking.dateText) at \(booking.time)")
+                                .font(.system(size: 12))
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                    }
+                    .padding(12)
+                    .background(Color.brandDarkGreen.opacity(0.08))
+                    .cornerRadius(12)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+                }
+
                 // Search bar
                 HStack(spacing: 10) {
                     Image(systemName: "magnifyingglass")
@@ -243,7 +278,6 @@ struct DiscoverView: View {
                     .padding(.horizontal, 16)
                 }
                 .padding(.bottom, 16)
-
                 // Card deck
                 if filteredBusinesses.isEmpty {
                     emptyState
@@ -285,32 +319,8 @@ struct DiscoverView: View {
                         }
                     }
                     .padding(.horizontal, 16)
-                    .padding(.top, 0)
+                    .padding(.bottom, 16)
 
-                    // Like / Nope buttons
-                    if let top = topBusiness {
-                        HStack(spacing: 32) {
-                            Button(action: { swipeCard(business: top, liked: false) }) {
-                                Image(systemName: "xmark")
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .foregroundColor(.primary.opacity(0.5))
-                                    .frame(width: 40, height: 40)
-                                    .background(.regularMaterial)
-                                    .clipShape(Circle())
-                                    .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 2)
-                            }
-                            Button(action: { swipeCard(business: top, liked: true) }) {
-                                Image(systemName: "heart.fill")
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .foregroundColor(.primary.opacity(0.5))
-                                    .frame(width: 40, height: 40)
-                                    .background(.regularMaterial)
-                                    .clipShape(Circle())
-                                    .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 2)
-                            }
-                        }
-                        .padding(.top, 12)
-                    }
                 }
 
                 Spacer(minLength: 0)

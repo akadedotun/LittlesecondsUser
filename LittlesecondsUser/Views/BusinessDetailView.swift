@@ -101,17 +101,11 @@ struct BusinessDetailView: View {
             .background(Color.backgroundGray)
 
             // Pinned Book Now button
-            VStack {
-                CustomButton("Book Now", style: .primary) {
-                    showBookingFlow = true
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 16)
+            CustomButton("Book Now", style: .primary) {
+                showBookingFlow = true
             }
-            .background(
-                Color.backgroundGray
-                    .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: -4)
-            )
+            .padding(.horizontal, 16)
+            .padding(.vertical, 16)
         }
         .navigationTitle(business.name)
         .navigationBarTitleDisplayMode(.inline)

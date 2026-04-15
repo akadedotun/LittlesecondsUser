@@ -4,6 +4,7 @@ struct BookingFlowView: View {
     let business: Business
     var onDismiss: () -> Void = {}
 
+    @EnvironmentObject private var appState: AppState
     @State private var step: Int = 1
     @State private var selectedService: Service? = nil
     @State private var selectedDate: Date = Date()
@@ -33,7 +34,17 @@ struct BookingFlowView: View {
         switch step {
         case 1: if selectedService != nil { step = 2 }
         case 2: if selectedTime != nil { step = 3 }
-        default: confirmed = true
+        default:
+            if let service = selectedService, let time = selectedTime {
+                appState.addBooking(Booking(
+                    business: business,
+                    service: service,
+                    date: selectedDate,
+                    time: time,
+                    status: .upcoming
+                ))
+            }
+            confirmed = true
         }
     }
 
@@ -64,17 +75,11 @@ struct BookingFlowView: View {
                 }
 
                 // Pinned button
-                VStack {
-                    CustomButton(buttonTitle, style: .primary, action: advanceStep)
-                        .padding(.horizontal, 16)
-                        .opacity(buttonEnabled ? 1 : 0.5)
-                        .disabled(!buttonEnabled)
-                }
-                .padding(.vertical, 16)
-                .background(
-                    Color.backgroundGray
-                        .shadow(color: .black.opacity(0.06), radius: 8, x: 0, y: -4)
-                )
+                CustomButton(buttonTitle, style: .primary, action: advanceStep)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 16)
+                    .opacity(buttonEnabled ? 1 : 0.5)
+                    .disabled(!buttonEnabled)
             }
         }
         .background(Color.backgroundGray)
@@ -236,22 +241,26 @@ struct BookingFlowView: View {
 
     // MARK: - Confirmation
     private var confirmationView: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 0) {
+            // Content pinned to top
+            VStack(spacing: 20) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 72))
+                    .foregroundColor(.brandDarkGreen)
+                    .padding(.top, 24)
+
+                Text("Booking Confirmed!")
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundColor(.brandDarkGreen)
+
+                summaryCard
+                    .padding(.horizontal, 16)
+            }
+            .frame(maxWidth: .infinity, alignment: .top)
+
             Spacer()
 
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 72))
-                .foregroundColor(.brandDarkGreen)
-
-            Text("Booking Confirmed!")
-                .font(.system(size: 24, weight: .semibold))
-                .foregroundColor(.brandDarkGreen)
-
-            summaryCard
-                .padding(.horizontal, 16)
-
-            Spacer()
-
+            // Button pinned to bottom
             CustomButton("Done", style: .primary) {
                 onDismiss()
             }

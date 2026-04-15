@@ -4,6 +4,22 @@ struct SampleData {
 
     static let businesses: [Business] = [
         Business(
+            name: "Curl & Co.",
+            category: "Salon",
+            rating: 4.6,
+            reviewCount: 74,
+            distanceMiles: 0.8,
+            fromPrice: 35,
+            color: Color(red: 0.98, green: 0.88, blue: 0.72),
+            imageName: "business4",
+            services: [
+                Service(name: "Wash & go", durationMinutes: 45, price: 35),
+                Service(name: "Twist out", durationMinutes: 60, price: 50),
+                Service(name: "Trim", durationMinutes: 30, price: 25),
+                Service(name: "Deep condition", durationMinutes: 45, price: 40)
+            ]
+        ),
+        Business(
             name: "Luxe Hair Studio",
             category: "Salon",
             rating: 4.9,
@@ -17,22 +33,6 @@ struct SampleData {
                 Service(name: "Highlights", durationMinutes: 90, price: 85),
                 Service(name: "Cut & style", durationMinutes: 60, price: 55),
                 Service(name: "Hair treatment", durationMinutes: 30, price: 40)
-            ]
-        ),
-        Business(
-            name: "The Salon Co.",
-            category: "Barber",
-            rating: 4.7,
-            reviewCount: 98,
-            distanceMiles: 0.6,
-            fromPrice: 15,
-            color: Color(red: 0.72, green: 0.85, blue: 0.98),
-            imageName: "business2",
-            services: [
-                Service(name: "Fade", durationMinutes: 30, price: 15),
-                Service(name: "Beard trim", durationMinutes: 20, price: 12),
-                Service(name: "Cut & beard", durationMinutes: 45, price: 25),
-                Service(name: "Hot towel shave", durationMinutes: 30, price: 20)
             ]
         ),
         Business(
@@ -53,22 +53,6 @@ struct SampleData {
             ]
         ),
         Business(
-            name: "Curl & Co.",
-            category: "Salon",
-            rating: 4.6,
-            reviewCount: 74,
-            distanceMiles: 0.8,
-            fromPrice: 35,
-            color: Color(red: 0.98, green: 0.88, blue: 0.72),
-            imageName: "business4",
-            services: [
-                Service(name: "Wash & go", durationMinutes: 45, price: 35),
-                Service(name: "Twist out", durationMinutes: 60, price: 50),
-                Service(name: "Trim", durationMinutes: 30, price: 25),
-                Service(name: "Deep condition", durationMinutes: 45, price: 40)
-            ]
-        ),
-        Business(
             name: "Fade Kings",
             category: "Barber",
             rating: 4.9,
@@ -82,6 +66,22 @@ struct SampleData {
                 Service(name: "Line up", durationMinutes: 20, price: 12),
                 Service(name: "Full cut", durationMinutes: 45, price: 22),
                 Service(name: "Kid's cut", durationMinutes: 30, price: 14)
+            ]
+        ),
+        Business(
+            name: "The Salon Co.",
+            category: "Barber",
+            rating: 4.7,
+            reviewCount: 98,
+            distanceMiles: 0.6,
+            fromPrice: 15,
+            color: Color(red: 0.72, green: 0.85, blue: 0.98),
+            imageName: "business2",
+            services: [
+                Service(name: "Fade", durationMinutes: 30, price: 15),
+                Service(name: "Beard trim", durationMinutes: 20, price: 12),
+                Service(name: "Cut & beard", durationMinutes: 45, price: 25),
+                Service(name: "Hot towel shave", durationMinutes: 30, price: 20)
             ]
         ),
         Business(
