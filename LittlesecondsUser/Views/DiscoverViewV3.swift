@@ -247,7 +247,11 @@ struct DiscoverViewV3: View {
             VStack(alignment: .leading, spacing: 12) {
                 // Tags
                 HStack(spacing: 6) {
-                    tagPill("Featured")
+                    if !preferences.isEmpty {
+                        tagPill("⭐ Top Recommendation")
+                    } else {
+                        tagPill("Featured")
+                    }
                     tagPill(heroBusiness.category)
                 }
 
